@@ -14,48 +14,57 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-class Player extends Circle {
-
+public class Player extends Circle {
     private double x;
     private double y;
-   // Color color = new Color(27.0, 225.0, 0.0, 0.1);
+    private MapReader mapReader;
 
-    public Player(double x, double y, double radios) {
-        super(x, y, radios);
-                setFill(Color.YELLOW);
-        this.x = x;
-        this.y = y;
+    public Player(double radius, MapReader mapReader) {
+        super(50, 70, radius);
+        setFill(Color.YELLOW);
+        this.x = 50;
+        this.y = 70;
+        this.mapReader = mapReader;
     }
 
     public void moveUp() {
-        animateMove(y - 13, x);
-        y -= 13;
+        animateMove(y - 10, x);
+        y -= 10;
     }
 
     public void moveDown() {
-        animateMove(y + 13, x);
-        y += 13;
+        animateMove(y + 10, x);
+        y += 10;
     }
 
     public void moveLeft() {
-        animateMove(y, x - 13);
-        x -= 13;
+        animateMove(y, x - 10);
+        x -= 10;
     }
 
     public void moveRight() {
-        animateMove(y, x + 13);
-        x += 13;
+        animateMove(y, x + 10);
+        x += 10;
+        
     }
 
+   
+
     private void animateMove(double targetY, double targetX) {
-        Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0.1),
-                event -> {
-                    setTranslateX(targetX);
-                    setTranslateY(targetY);
-                    setCenterX(targetX);
-                    setCenterY(targetY);
-                }));
-        timeline.play();
+        if (!mapReader.isWhitePixel(targetX, targetY)) { // Check if the next position is white
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(0.1),
+                    event -> {
+                        setTranslateX(targetX);
+                        setTranslateY(targetY);
+                        setCenterX(targetX);
+                        setCenterY(targetY);
+                        System.out.println(x + "  " + y);
+                    }));
+    
+            timeline.play();
+            x = targetX;
+            y = targetY;
+        }
     }
 }

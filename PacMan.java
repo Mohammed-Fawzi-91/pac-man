@@ -127,8 +127,7 @@ public class PacMan {
         prevX = x;
         prevY = y;
     
-        // check for collisions with other objects
-        // update game state accordingly
+       
     }
     
     public void draw(Graphics2D g2d) {

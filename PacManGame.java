@@ -14,10 +14,11 @@ public class PacManGame {
         // Define the walls of the map
        
         walls.add(new Rectangle(0, 0, 20, 600));
-        walls.add(new Rectangle(0, 0, 800, 20));
-      walls.add(new Rectangle(0, 580, 800, 20));
+        walls.add(new Rectangle(20,0 , 800, 20));
+      walls.add(new Rectangle(20, 580, 800, 20));
 
-        walls.add(new Rectangle(780, 0, 20, 600));
+        walls.add(new Rectangle(780, 20, 20, 600));
+        
         walls.add(new Rectangle(300, 200, 200, 50));
         walls.add(new Rectangle(300, 350, 200, 50));
         walls.add(new Rectangle(200, 150, 50, 250));

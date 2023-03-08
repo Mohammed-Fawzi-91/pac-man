@@ -84,7 +84,7 @@ public class PacMan {
 
     public Rectangle getBounds() {
         // return bounding box for Pac-Man character
-        return new Rectangle(x, y, 48, 48);
+        return new Rectangle(x, y, 28, 28);
     }
 
     public void update(Keyboard keyboard, ArrayList<Rectangle> walls) {

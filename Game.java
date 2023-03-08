@@ -31,7 +31,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         pacMan = new PacMan(400, 300, 3);
         monsters = new Monster[3];
         for (int i = 0; i < 3; i++) {
-            monsters[i] = new Monster(100 + i * 100, 100, 20);
+            monsters[i] = new Monster(130 + i * 150, 150 + i * 150, 20);
         }
         timer = new Timer(10, this);
         timer.start();

@@ -1,17 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 public class PacManGame {
     private ArrayList<Rectangle> walls;
+    private ArrayList<Ellipse2D> dots;
 
     public PacManGame() {
         walls = new ArrayList<Rectangle>();
+        dots = new ArrayList<Ellipse2D>();
         // Define the walls of the map
-        walls.add(new Rectangle(0, 0, 800, 20));
-        walls.add(new Rectangle(0, 580, 800, 20));
+       
         walls.add(new Rectangle(0, 0, 20, 600));
+        walls.add(new Rectangle(0, 0, 800, 20));
+      walls.add(new Rectangle(0, 580, 800, 20));
+
         walls.add(new Rectangle(780, 0, 20, 600));
         walls.add(new Rectangle(300, 200, 200, 50));
         walls.add(new Rectangle(300, 350, 200, 50));
@@ -21,21 +26,52 @@ public class PacManGame {
         walls.add(new Rectangle(650, 100, 50, 50));
         walls.add(new Rectangle(100, 450, 50, 50));
         walls.add(new Rectangle(650, 450, 50, 50));
+
+        // Define the dots in the map
+        int dotSize = 10;
+        int dotSpacing = 30;
+        for (int x = dotSpacing; x < 800 - dotSpacing; x += dotSpacing) {
+            for (int y = dotSpacing; y < 600 - dotSpacing; y += dotSpacing) {
+                Ellipse2D dot = new Ellipse2D.Double(x - dotSize / 2, y - dotSize / 2, dotSize, dotSize);
+                if (!collidesWithWall(dot)) {
+                    dots.add(dot);
+                }
+            }
+        }
+    }
+
+    private boolean collidesWithWall(Ellipse2D dot) {
+        for (Rectangle wall : walls) {
+            if (dot.intersects(wall)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void draw(Graphics2D g2d) {
         // Set black background
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, 800, 600);
-        
+
+        // Draw the dots
+        g2d.setColor(Color.YELLOW);
+        for (Ellipse2D dot : dots) {
+            g2d.fill(dot);
+        }
+
         // Draw the walls
         g2d.setColor(Color.BLUE);
         for (Rectangle wall : walls) {
             g2d.fill(wall);
         }
     }
-    
+
     public ArrayList<Rectangle> getWalls() {
         return walls;
+    }
+
+    public ArrayList<Ellipse2D> getDots() {
+        return dots;
     }
 }

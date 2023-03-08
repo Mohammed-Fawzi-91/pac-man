@@ -20,17 +20,12 @@ public class PacMan {
     }
 
     public void moveUp(ArrayList<Rectangle> walls) {
-        // save previous position for collision detection
         prevX = x;
         prevY = y;
-    
-        // move Pac-Man up
+
         y -= speed;
-    
-        // check for collisions with walls
         for (Rectangle wall : walls) {
             if (getBounds().intersects(wall)) {
-                // move Pac-Man back to previous position
                 y = prevY;
                 break;
             }
@@ -38,17 +33,11 @@ public class PacMan {
     }
 
     public void moveDown(ArrayList<Rectangle> walls) {
-        // save previous position for collision detection
         prevX = x;
         prevY = y;
-    
-        // move Pac-Man up
         y += speed;
-    
-        // check for collisions with walls
         for (Rectangle wall : walls) {
             if (getBounds().intersects(wall)) {
-                // move Pac-Man back to previous position
                 y = prevY;
                 break;
             }
@@ -67,7 +56,7 @@ public class PacMan {
         for (Rectangle wall : walls) {
             if (getBounds().intersects(wall)) {
                 // move Pac-Man back to previous position
-                x = prevY;
+                x = prevX;
                 break;
             }
         }
@@ -85,7 +74,7 @@ public class PacMan {
         for (Rectangle wall : walls) {
             if (getBounds().intersects(wall)) {
                 // move Pac-Man back to previous position
-                x = prevY;
+                x = prevX;
                 break;
             }
         }
@@ -95,7 +84,7 @@ public class PacMan {
 
     public Rectangle getBounds() {
         // return bounding box for Pac-Man character
-        return new Rectangle(x, y, 20, 20);
+        return new Rectangle(x, y, 48, 48);
     }
 
     public void update(Keyboard keyboard, ArrayList<Rectangle> walls) {
@@ -127,7 +116,8 @@ public class PacMan {
         prevX = x;
         prevY = y;
     
-       
+        // check for collisions with other objects
+        // update game state accordingly
     }
     
     public void draw(Graphics2D g2d) {
@@ -135,8 +125,9 @@ public class PacMan {
         g2d.setColor(color);
     
         // draw the Pac-Man character as an arc
-        g2d.fillArc(x, y, 20, 20, 45, 270);
+        g2d.fillArc(x, y, 30, 30, 45, 270);
     }
+    
 
     public int getX() {
         return x;
@@ -146,10 +137,10 @@ public class PacMan {
         return y;
     }
 
-    public boolean intersects(Rectangle bounds) {
-        return false;
+  
+    public boolean intersects(Rectangle rectangle) {
+        return getBounds().intersects(rectangle);
     }
-
     
     
    

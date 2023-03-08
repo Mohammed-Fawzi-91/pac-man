@@ -28,7 +28,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         pacManGame = new PacManGame();
 
-        pacMan = new PacMan(400, 300, 5);
+        pacMan = new PacMan(400, 300, 3);
         monsters = new Monster[3];
         for (int i = 0; i < 3; i++) {
             monsters[i] = new Monster(100 + i * 100, 100, 20);
@@ -70,7 +70,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         pacMan.update(keyboard, pacManGame.getWalls());
         for (Monster monster : monsters) {
-            monster.update(pacMan.getX(), pacMan.getY());
+            monster.update(pacMan.getX(), pacMan.getY(),pacManGame.getWalls());
             if (pacMan.intersects(monster.getBounds())) {
                 gameOver();
                 return;

@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Ellipse2D;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -53,14 +55,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             g.fillRect(wall.x, wall.y, wall.width, wall.height);
         }
     
-        // draw the Pac-Man character and monsters
+        // draw the Pac-Man character og monsters
         pacManGame.draw((Graphics2D) g);
         pacMan.draw((Graphics2D) g);
         for (Monster monster : monsters) {
             monster.draw((Graphics2D) g);
         }
     
-        // draw the level and score
+        // draw the level og score
         g.setColor(Color.WHITE);
         g.drawString("Level: " + level, 20, 20);
         g.drawString("Score: " + score, 20, 40);
@@ -69,15 +71,35 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         pacMan.update(keyboard, pacManGame.getWalls());
+    
+        
+        for (Ellipse2D dot : pacManGame.getDots()) {
+            if (pacMan.intersects(dot.getBounds2D())) {
+                pacManGame.getDots().remove(dot);
+                score += 10;
+                break;
+            }
+        }
+    
         for (Monster monster : monsters) {
-            monster.update(pacMan.getX(), pacMan.getY(),pacManGame.getWalls());
+            monster.update(pacMan.getX(), pacMan.getY(), pacManGame.getWalls());
             if (pacMan.intersects(monster.getBounds())) {
                 gameOver();
                 return;
             }
         }
+    
+        // Check if all dots have been eaten
+        if (pacManGame.getDots().isEmpty()) {
+            timer.stop();
+            System.out.println("Success!");
+            System.out.println("Final Score: " + score);
+            System.exit(0);
+        }
+    
         repaint();
     }
+    
 
     private void gameOver() {
         timer.stop();

@@ -24,11 +24,9 @@ public class Monster {
     }
 
     public void moveTowards(int targetX, int targetY, ArrayList<Rectangle> walls) {
-        // Calculate the direction to move in
         int dx = Integer.compare(targetX, x);
         int dy = Integer.compare(targetY, y);
     
-        // Check if moving in the x direction is possible
         Rectangle potentialXMove = new Rectangle(x + dx * speed, y, size, size);
         boolean canMoveX = true;
         for (Rectangle wall : walls) {
@@ -38,7 +36,6 @@ public class Monster {
             }
         }
     
-        // Check if moving in the y direction is possible
         Rectangle potentialYMove = new Rectangle(x, y + dy * speed, size, size);
         boolean canMoveY = true;
         for (Rectangle wall : walls) {
@@ -48,7 +45,6 @@ public class Monster {
             }
         }
     
-        // Move in the direction that is possible
         if (canMoveX && (dx != 0 || !canMoveY)) {
             x += dx * speed;
         } else if (canMoveY) {

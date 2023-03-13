@@ -1,57 +1,19 @@
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public class Monster {
-    private int x;
-    private int y;
-    private int size;
-    private int speed;
-    private Color color;
+public abstract class Monster {
+    protected int x;
+    protected int y;
+    protected int size;
+    protected int speed;
+  
 
-    public Monster(int x, int y, int size) {
+    public Monster(int x, int y, int size, int speed) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.speed = 1;
-        this.color = Color.RED;
+        this.speed = speed;
     }
-
-    public void draw(Graphics2D g2d) {
-        g2d.setColor(color);
-        g2d.fillOval(x, y, size, size);
-    }
-
-    public void moveTowards(int targetX, int targetY, ArrayList<Rectangle> walls) {
-        int dx = Integer.compare(targetX, x);
-        int dy = Integer.compare(targetY, y);
-    
-        Rectangle potentialXMove = new Rectangle(x + dx * speed, y, size, size);
-        boolean canMoveX = true;
-        for (Rectangle wall : walls) {
-            if (potentialXMove.intersects(wall)) {
-                canMoveX = false;
-                break;
-            }
-        }
-    
-        Rectangle potentialYMove = new Rectangle(x, y + dy * speed, size, size);
-        boolean canMoveY = true;
-        for (Rectangle wall : walls) {
-            if (potentialYMove.intersects(wall)) {
-                canMoveY = false;
-                break;
-            }
-        }
-    
-        if (canMoveX && (dx != 0 || !canMoveY)) {
-            x += dx * speed;
-        } else if (canMoveY) {
-            y += dy * speed;
-        }
-    }
-    
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, size, size);
@@ -65,5 +27,5 @@ public class Monster {
         moveTowards(targetX, targetY, walls);
     }
 
-    
+    protected abstract void moveTowards(int targetX, int targetY, ArrayList<Rectangle> walls);
 }

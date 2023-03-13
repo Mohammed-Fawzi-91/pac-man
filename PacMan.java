@@ -18,7 +18,13 @@ public class PacMan {
         this.x = x;
         this.y = y;
         this.speed = speed;
+        this.color = Color.YELLOW; 
     }
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    
+    
 
     public void moveUp(ArrayList<Rectangle> walls) {
         prevX = x;
@@ -124,12 +130,20 @@ public class PacMan {
     public int getY() {
         return y;
     }
+    public void setY() {
+      y = 300;
+    }
+    public void setX() {
+        x = 400;
+      }
 
   
     public boolean intersects(Rectangle2D rectangle2d) {
         return getBounds().intersects(rectangle2d);
     }
-    
+
+
+  
     
    
 }

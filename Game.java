@@ -15,40 +15,53 @@ import javax.swing.Timer;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
     private PacMan pacMan;
-    private Monster[] monsters;
     private Timer timer;
     private int level;
     private int score;
+    private int life;
     private Keyboard keyboard;
     private PacManGame pacManGame;
-    PacManGame map = new PacManGame();
+    private Blinky blinky;
+    private PinkeyInky pinkey,inky;
+    private Clyde clyde;
+    private boolean a,b,c,d;
+    private boolean gameOver;
+
+  
 
     public Game() {
-        setPreferredSize(new Dimension(800, 600));
-        setBackground(map);
+        setPreferredSize(new Dimension(800, 660));
+   
         setFocusable(true);
         addKeyListener(this);
         pacManGame = new PacManGame();
-
+       
         pacMan = new PacMan(400, 300, 3);
-        monsters = new Monster[3];
-        for (int i = 0; i < 3; i++) {
-            monsters[i] = new Monster(130 + i * 150, 150 + i * 150, 20);
-        }
+        blinky = new Blinky(100,200,19,1);
+        pinkey = new PinkeyInky(100, 300, 19, 1, Color.PINK);
+        inky = new PinkeyInky(300, 500, 19, 1, Color.BLUE);
+        clyde = new Clyde(500, 500, 19, 1);
+        
+
+     
         timer = new Timer(10, this);
         timer.start();
 
         level = 1;
         score = 0;
+        life = 3;
         keyboard = new Keyboard();
     }
 
-    private void setBackground(PacManGame map2) {
-    }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-    
+        if (gameOver) {
+            g.setColor(Color.WHITE);
+            g.drawString("Press any key to start a new game", getWidth()/2-100, getHeight()/2);
+            return;
+        }
         // draw the walls
         for (java.awt.Rectangle wall : pacManGame.getWalls()) {
             g.setColor(Color.BLACK);
@@ -56,21 +69,60 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         }
     
         // draw the Pac-Man character og monsters
-        pacManGame.draw((Graphics2D) g);
+        pacManGame.draw((Graphics2D) g,level);
+
+
+        blinky.draw((Graphics2D) g);
+        clyde.draw((Graphics2D) g);
+        pinkey.draw((Graphics2D) g);
+        inky.draw((Graphics2D) g);
         pacMan.draw((Graphics2D) g);
-        for (Monster monster : monsters) {
-            monster.draw((Graphics2D) g);
-        }
+      
+       
+      
+        
     
         // draw the level og score
-        g.setColor(Color.WHITE);
-        g.drawString("Level: " + level, 20, 20);
-        g.drawString("Score: " + score, 20, 40);
+        g.setColor(Color.GREEN);
+        g.drawString("level: " + level, 20, 613);
+        g.drawString("Score: " + score, 20, 633);
+        g.drawString("Life: " + life, 20, 653);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         pacMan.update(keyboard, pacManGame.getWalls());
+
+       
+        blinky.update(pacMan.getX(), pacMan.getY(), pacManGame.getWalls());
+        clyde.update(pacMan.getX(), pacMan.getY(), pacManGame.getWalls());
+        inky.update(pacMan.getX(), pacMan.getY(), pacManGame.getWalls());
+        pinkey.update(pacMan.getX(), pacMan.getY(), pacManGame.getWalls());
+        a = pacMan.intersects(blinky.getBounds());
+        b = pacMan.intersects(clyde.getBounds());
+        c = pacMan.intersects(inky.getBounds());
+        d = pacMan.intersects(pinkey.getBounds());
+
+     
+        if (((a|| b|| c || d) && life == 0)|| pacManGame.getDots().isEmpty()) {
+            gameOver(getGraphics());
+            gameOver = true;
+            return;
+        } else if (a|| b|| c || d) {
+            life --;
+            timer.stop();
+
+            missedLive(getGraphics());
+            pacMan.setX();
+            pacMan.setY();
+
+            timer.start();
+            return;
+
+          
+        }
+   
+      
     
         
         for (Ellipse2D dot : pacManGame.getDots()) {
@@ -81,13 +133,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             }
         }
     
-        for (Monster monster : monsters) {
-            monster.update(pacMan.getX(), pacMan.getY(), pacManGame.getWalls());
-            if (pacMan.intersects(monster.getBounds())) {
-                gameOver();
-                return;
-            }
-        }
+     
     
         // Check if all dots have been eaten
         if (pacManGame.getDots().isEmpty()) {
@@ -101,17 +147,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     }
     
 
-    private void gameOver() {
+    private void gameOver(Graphics g) {
+        pacManGame.drawGameOver((Graphics2D)g,level, score);
         timer.stop();
-        System.out.println("Game Over!");
-        System.out.println("Final Score: " + score);
-        System.exit(0);
+       
+    }
+    private void missedLive(Graphics g) {
+        timer.stop();
+        pacManGame.drawMissedLive((Graphics2D)g, life);
+        
+    
+       
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        keyboard.keyPressed(e);
-    }
+  
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -121,6 +170,27 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
     }
+    @Override
+public void keyPressed(KeyEvent e) {
+    if (gameOver) {
+        // reset the game state
+        level = 1;
+        score = 0;
+        life = 3;
+        pacMan = new PacMan(400, 300, 3);
+        blinky = new Blinky(100,200,19,1);
+        pinkey = new PinkeyInky(100, 300, 19, 1, Color.PINK);
+        inky = new PinkeyInky(300, 500, 19, 1, Color.BLUE);
+        clyde = new Clyde(500, 500, 19, 1);
+        pacManGame = new PacManGame();
+        keyboard = new Keyboard();
+        gameOver = false;
+        timer.start();
+        repaint();
+    } else {
+        keyboard.keyPressed(e);
+    }
+}
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Pac-Man");

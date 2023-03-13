@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
+import javafx.scene.text.Font;
+
 public class PacManGame {
     private ArrayList<Rectangle> walls;
     private ArrayList<Ellipse2D> dots;
@@ -50,7 +52,7 @@ public class PacManGame {
         return false;
     }
 
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d, int level) {
         // Set black background
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, 800, 600);
@@ -67,6 +69,19 @@ public class PacManGame {
             g2d.fill(wall);
         }
     }
+    public void drawGameOver(Graphics2D g2d, int level, int score) {
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, 0, 800, 600);
+        g2d.setColor(Color.WHITE);
+        
+        // Set a larger font size
+        java.awt.Font font = g2d.getFont().deriveFont(32f);
+        g2d.setFont(font);
+        
+        g2d.drawString("Level: " + level, 360, 300);
+        g2d.drawString("Score: " + score, 360, 340);
+    }
+    
 
     public ArrayList<Rectangle> getWalls() {
         return walls;
@@ -74,5 +89,17 @@ public class PacManGame {
 
     public ArrayList<Ellipse2D> getDots() {
         return dots;
+    }
+
+    public void drawMissedLive(Graphics2D g2d,int live) {
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0, 300, 800, 60);
+        g2d.setColor(Color.WHITE);
+        
+        // Set a larger font size
+        java.awt.Font font = g2d.getFont().deriveFont(32f);
+        g2d.setFont(font);
+        
+        g2d.drawString("live: " + live, 360, 340);
     }
 }

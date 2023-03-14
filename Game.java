@@ -137,10 +137,17 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     
         // Check if all dots have been eaten
         if (pacManGame.getDots().isEmpty()) {
+            if (level < 3 ){
+            level ++;
+            repaint();
+            }else {
+
+
             timer.stop();
             System.out.println("Success!");
             System.out.println("Final Score: " + score);
             System.exit(0);
+            }
         }
     
         repaint();
@@ -153,8 +160,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
        
     }
     private void missedLive(Graphics g) {
-        timer.stop();
+       
         pacManGame.drawMissedLive((Graphics2D)g, life);
+        timer.stop();
         
     
        

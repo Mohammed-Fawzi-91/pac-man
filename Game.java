@@ -1,3 +1,12 @@
+/**
+
+The Game class implements a Pac-Man game with graphics.
+It extends JPanel and implements ActionListener and KeyListener interfaces.
+The game includes a Pac-Man character and 4 monsters, walls, dots, and fruits.
+The game has 3 levels and 3 lives per level. The game ends if all lives are lost or all levels are completed.
+@version 1.0
+
+*/
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -62,13 +71,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
             g.drawString("Press any key to start a new game", getWidth()/2-100, getHeight()/2);
             return;
         }
-        // draw the walls
+        // draw  veggene
         for (java.awt.Rectangle wall : pacManGame.getWalls()) {
             g.setColor(Color.BLACK);
             g.fillRect(wall.x, wall.y, wall.width, wall.height);
         }
     
-        // draw the Pac-Man character og monsters
+        // draw  Pac-Man og monsters
         pacManGame.draw((Graphics2D) g,level);
 
 
@@ -135,7 +144,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     
      
     
-        // Check if all dots have been eaten
+        // Check hvis alle dots ble spist opp.
         if (pacManGame.getDots().isEmpty()) {
             if (level < 3 ){
             level ++;

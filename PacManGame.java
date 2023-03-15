@@ -1,3 +1,12 @@
+/**
+
+PacManGame er klassen som inneholder informasjon om vegger og prikker på PacMan-spillekartet.
+
+Denne klassen har funksjoner for å tegne kartet og tilstanden til spillet.
+*/
+
+
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -5,7 +14,12 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import javafx.scene.text.Font;
+/**
 
+Konstruktøren til PacManGame-klassen.
+
+Her defineres veggene og prikkene på spillekartet.
+*/
 public class PacManGame {
     private ArrayList<Rectangle> walls;
     private ArrayList<Ellipse2D> dots;
@@ -30,7 +44,7 @@ public class PacManGame {
         walls.add(new Rectangle(100, 450, 50, 50));
         walls.add(new Rectangle(650, 450, 50, 50));
 
-        // Define the dots in the map
+      
         int dotSize = 10;
         int dotSpacing = 30;
         for (int x = dotSpacing; x < 800 - dotSpacing; x += dotSpacing) {
@@ -57,13 +71,13 @@ public class PacManGame {
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, 800, 600);
 
-        // Draw the dots
+        // Draw  dots
         g2d.setColor(Color.YELLOW);
         for (Ellipse2D dot : dots) {
             g2d.fill(dot);
         }
 
-        // Draw the walls
+        // Draw vegger
         g2d.setColor(Color.BLUE);
         for (Rectangle wall : walls) {
             g2d.fill(wall);
@@ -74,7 +88,7 @@ public class PacManGame {
         g2d.fillRect(0, 0, 800, 600);
         g2d.setColor(Color.WHITE);
         
-        // Set a larger font size
+      
         java.awt.Font font = g2d.getFont().deriveFont(32f);
         g2d.setFont(font);
         
@@ -96,7 +110,7 @@ public class PacManGame {
         g2d.fillRect(0, 300, 800, 60);
         g2d.setColor(Color.WHITE);
         
-        // Set a larger font size
+       
         java.awt.Font font = g2d.getFont().deriveFont(32f);
         g2d.setFont(font);
         

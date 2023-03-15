@@ -1,3 +1,12 @@
+/**
+
+PinkeyInky-klassen representerer en type monster i Pac-Man-spill.
+Den utvider Monster-klassen og overstyrer dens moveTowards()-metode.
+PinkeyInky flytter to ruter foran Pac-Man i retningen som
+er mer fjernt til det, med sikte på å kutte Pac-Man av.
+
+*/
+
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -17,6 +26,12 @@ public class PinkeyInky extends Monster {
         this.color= color;
         
     }
+
+    /**
+  * Tegner dette PinkeyInky-objektet ved å bruke det spesifiserte Graphics2D-objektet.
+  * Fargen som brukes til å tegne er fargen på dette PinkeyInky-objektet.
+  * @param g2d Graphics2D-objektet som skal brukes til tegning
+  */
     public void draw(Graphics2D g2d) {
         g2d.setColor(color);
         g2d.fillOval(x, y, size, size);
@@ -24,22 +39,18 @@ public class PinkeyInky extends Monster {
   
     @Override
     protected void moveTowards(int targetX, int targetY, ArrayList<Rectangle> walls) {
-        // Implementation of moveTowards() specific to PinkeyInky
         int dx = targetX - x;
         int dy = targetY - y;
         int px, py; // position to aim for
         
         if (Math.abs(dx) > Math.abs(dy)) {
-            // Pac-Man is more horizontally distant
-            px = targetX + dx / Math.abs(dx) * size * 2; // aim two squares ahead
+            px = targetX + dx / Math.abs(dx) * size * 2; 
             py = targetY;
         } else {
-            // Pac-Man is more vertically distant
             px = targetX;
-            py = targetY + dy / Math.abs(dy) * size * 2; // aim two squares ahead
+            py = targetY + dy / Math.abs(dy) * size * 2;
         }
         
-        // Try to move towards the target position
         int dirX = Integer.compare(px, x);
         int dirY = Integer.compare(py, y);
     

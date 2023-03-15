@@ -6,7 +6,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.awt.Color;
 
-
+/**
+ * Representerer karakteren PacMan i  spillet.
+ */
 public class PacMan {
     private int x;
     private int y;
@@ -14,6 +16,17 @@ public class PacMan {
     private Color color = Color.YELLOW;
     private int prevX,prevY;
 
+
+
+
+    /**
+     * Oppretter en ny instans av PacMan med gitt x- og y-koordinat og hastighet.
+     * Fargen blir satt til gult som standard.
+     * 
+     * @param x     x-koordinatet til PacMan
+     * @param y     y-koordinatet til PacMan
+     * @param speed   hastigheten til pacMan
+     * */
     public PacMan(int x, int y, int speed) {
         this.x = x;
         this.y = y;
@@ -82,7 +95,7 @@ public class PacMan {
     }
 
    
-
+// Returnerer en rektangel som representerer PacMans område.
     public Rectangle getBounds() {
         return new Rectangle(x, y, 28, 28);
     }
@@ -109,7 +122,6 @@ public class PacMan {
             }
         }
     
-        // save current position for collision detection in next frame
         prevX = x;
         prevY = y;
     
@@ -137,7 +149,7 @@ public class PacMan {
         x = 400;
       }
 
-  
+  //Sjekker om PacMan kolliderer med en gitt rektangel.
     public boolean intersects(Rectangle2D rectangle2d) {
         return getBounds().intersects(rectangle2d);
     }

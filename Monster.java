@@ -1,3 +1,12 @@
+/**
+
+Abstrakt klasse som representerer en monster i spillet.
+
+Monsteret har posisjon, størrelse og hastighet.
+
+Monsteret kan bevege seg mot et mål og sjekke om det kolliderer med en rektangel.
+*/
+
 import java.awt.Rectangle;
 import java.util.ArrayList;
 

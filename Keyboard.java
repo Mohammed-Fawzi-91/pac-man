@@ -1,3 +1,10 @@
+/**
+
+Keyboard klassen implementerer KeyListener for å lytte på tastetrykk og lagre en HashMap for å holde styr på statusen til hver tast.
+*/
+
+
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
